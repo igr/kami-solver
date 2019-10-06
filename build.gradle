@@ -1,0 +1,42 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.31'
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation enforcedPlatform('org.jodd:jodd-bom:5.0.14-20190602')
+
+    compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.31'
+    compile 'org.jetbrains.kotlin:kotlin-reflect:1.3.31'
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1'
+
+    compile 'org.jodd:jodd-log'
+    compile 'org.jodd:jodd-http'
+    compile 'org.jodd:jodd-json'
+    compile 'org.jodd:jodd-lagarto'
+
+}
+
+group = 'org.acme'
+version = '1.0'
+sourceCompatibility = '1.8'
+
+mainClassName = "rs.opendata.validator.CliRunnerKt"
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+compileKotlin {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
