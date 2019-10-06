@@ -6,5 +6,5 @@ fun main() {
 
     ImageParser().processImage("kami.png", tilesVisitor)
 
-    tilesVisitor.forEach { println(it) }
+    tilesVisitor.toBoard().forEach { println(it) }
 }

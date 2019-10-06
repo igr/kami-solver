@@ -1,5 +1,6 @@
 package com.oblac.kami
 
+import com.oblac.kami.model.Board
 import com.oblac.kami.model.Tile
 
 class TilesVisitor {
@@ -43,7 +44,8 @@ class TilesVisitor {
         tileIndexInRow = 0
     }
 
-    fun forEach(tileConsumer: (Tile) -> Unit) {
-        allTiles.forEach(tileConsumer)
+
+    fun toBoard(): Board {
+        return Board(allTiles)
     }
 }
