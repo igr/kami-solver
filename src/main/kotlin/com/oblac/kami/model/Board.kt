@@ -17,9 +17,16 @@ class Board(all: List<Tile>) {
     }
 
     fun reduce() {
-        var tilesToReduce = allTiles.toMutableSet()
+        val tilesToReduce = allTiles.toMutableSet()
         while (tilesToReduce.isNotEmpty()){
-            tilesToReduce = tilesToReduce.first().incorporateAllNeighbours(tilesToReduce)
+            val currentTile = tilesToReduce.first()
+            val obsoleteTiles = currentTile.uniteSameColorNeighbours()
+            obsoleteTiles.forEach {
+                it.disappear()
+            }
+
+            tilesToReduce.removeAll(obsoleteTiles)
+            tilesToReduce.remove(currentTile)
         }
     }
 }

@@ -8,28 +8,25 @@ data class Tile(
     private val connections = mutableSetOf<Tile>()
 
     fun connectTo(neighbour: Tile) {
-        connections.add(neighbour);
+        connections.add(neighbour)
         neighbour.connections.add(this)
     }
 
-    // rename to unite
-    fun incorporateAllNeighbours(tilesToReduce: MutableSet<Tile>): MutableSet<Tile> {
-        var secondStepConnections = mutableSetOf<Tile>()
-        var disappearingTiles = mutableSetOf<Tile>()
+    fun uniteSameColorNeighbours(): MutableSet<Tile> {
+        val secondStepConnections = mutableSetOf<Tile>()
+        val obsoleteTiles = mutableSetOf<Tile>()
         connections.forEach{
             if(it.color == this.color) {
                 secondStepConnections.addAll(it.connections)
-                tilesToReduce.remove(it)
-                it.disappear()
+                obsoleteTiles.add(it)
             }
         }
         connections.addAll(secondStepConnections)
 
-        tilesToReduce.remove(this)
-        return tilesToReduce
+        return obsoleteTiles
     }
 
-    private fun disappear() {
+    fun disappear() {
         connections.forEach{
             it.connections.remove(it)
         }
@@ -38,6 +35,6 @@ data class Tile(
     override fun toString(): String {
         var s = ""
         connections.forEach { s += "${it.color} " }
-        return "t: ($x, $y) $color → $s";
+        return "t: ($x, $y) $color → $s"
     }
 }
