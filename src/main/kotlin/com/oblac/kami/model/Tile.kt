@@ -12,19 +12,19 @@ data class Tile(
         neighbour.connections.add(this)
     }
 
+    // rename to unite
     fun incorporateAllNeighbours(tilesToReduce: MutableSet<Tile>): MutableSet<Tile> {
         var secondStepConnections = mutableSetOf<Tile>()
         var disappearingTiles = mutableSetOf<Tile>()
         connections.forEach{
             if(it.color == this.color) {
                 secondStepConnections.addAll(it.connections)
+                tilesToReduce.remove(it)
                 it.disappear()
-                disappearingTiles.add(it)
             }
         }
         connections.addAll(secondStepConnections)
 
-        tilesToReduce.removeAll(disappearingTiles)
         tilesToReduce.remove(this)
         return tilesToReduce
     }
@@ -32,7 +32,6 @@ data class Tile(
     private fun disappear() {
         connections.forEach{
             it.connections.remove(it)
-            // treba li jos odnekud da ga obrisem?
         }
     }
 
