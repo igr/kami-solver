@@ -10,6 +10,7 @@ class ImageParser {
 
 	fun processImage(imageName: String, visitor: TilesVisitor) {
 		val image: BufferedImage = ImageIO.read(File(imageName))
+		val g = image.graphics
 
 		val w = image.width
 		val h = image.height
@@ -26,8 +27,11 @@ class ImageParser {
 		while (y < maxY) {
 			while (x < w) {
 				val pixel = image.getRGB(x, y)
-				visitor.visitTriangle(colorOf(pixel))
+				val tile = visitor.visitTile(colorOf(pixel))
+
 				image.setRGB(x, y, pixel xor 0xFFFFFF)
+				g.drawString("(${tile.x},${tile.y})", x, y)
+
 				x += deltaX
 			}
 			y += deltaY
