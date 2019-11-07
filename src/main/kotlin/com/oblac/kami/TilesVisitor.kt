@@ -11,7 +11,7 @@ class TilesVisitor {
 
 	private val allTiles = mutableListOf<Tile>()
 
-	fun visitTriangle(color: Int) {
+	fun visitTile(color: Int): Tile {
 		val t = Tile(
 			x = tileIndexInRow, y = rowCount,
 			color = color)
@@ -37,6 +37,8 @@ class TilesVisitor {
 		// continue loop
 
 		tileIndexInRow++
+
+		return t
 	}
 
 	fun visitRowEnd() {
