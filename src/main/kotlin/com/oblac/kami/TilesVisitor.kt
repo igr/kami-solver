@@ -51,6 +51,6 @@ class TilesVisitor {
 	}
 
 	fun toBoard(): Board {
-		return Board(allTiles)
+		return Board(allTiles.toSet())
 	}
 }

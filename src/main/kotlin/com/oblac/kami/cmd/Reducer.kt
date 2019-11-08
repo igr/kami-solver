@@ -29,7 +29,7 @@ class Reducer {
 			}
 		}
 
-		return Board(remainingTiles)
+		return Board(remainingTiles, board.parentBoard)
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.oblac.kami
 
-import com.oblac.kami.cmd.Reducer
+import com.oblac.kami.cmd.Cmd
 import com.oblac.kami.model.Board
 import com.oblac.kami.model.Click
 import kotlin.streams.toList
@@ -8,33 +8,52 @@ import kotlin.streams.toList
 fun main() {
 	val tilesVisitor = TilesVisitor()
 
-	ImageParser().processImage("kami.png", tilesVisitor)
+	ImageParser().processImage("kami2.png", tilesVisitor)
+	val maxClicks = 3
 
-	val board = Reducer().reduce(tilesVisitor.toBoard())
+	val board = Cmd.reducer.reduce(tilesVisitor.toBoard())
 	board.tiles().forEach { println(it) }
 
-	foo(board, 0)
+	solve(board, maxClicks, deep = 0)
 }
 
 
-fun foo(board: Board, deep: Int) {
+fun solve(board: Board, maxClicks: Int, deep: Int): Boolean {
 	val colorCount = board.countColors()
 	if (colorCount == 1) {
-		println("SOLVED")
-		return
+		printSolvedSolution(board, deep - 1)
+		return true
 	}
-	if (deep > 4) {
-		return
+	if (deep >= maxClicks) {
+		return false
 	}
 
 	val clicks = createClicks(board)
 
 	for (click in clicks) {
-		val newBoard = click.apply(board)
-		foo(newBoard, deep + 1)
+		val newBoard = Cmd.clicker.click(board, click)
+		if (solve(newBoard, maxClicks, deep + 1)) {
+			return true
+		}
+	}
+	return false
+}
+
+fun printSolvedSolution(board: Board, totalSteps: Int) {
+	println("Solved in $totalSteps steps")
+
+	val history = mutableListOf<Click>()
+
+	var parent = board.parentBoard
+	while (parent != null) {
+		history.add(parent.changeClick)
+		parent = parent.board.parentBoard
 	}
 
+	history.reverse()
+	history.forEach { println(it) }
 }
+
 
 fun createClicks(board: Board): List<Click> {
 	val colorCount = board.countColors()
