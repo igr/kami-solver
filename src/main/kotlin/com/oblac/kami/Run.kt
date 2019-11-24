@@ -4,17 +4,22 @@ import com.oblac.kami.cmd.Cmd
 import com.oblac.kami.model.Board
 import com.oblac.kami.model.Click
 import kotlin.streams.toList
+import kotlin.system.measureTimeMillis
 
 fun main() {
 	val tilesVisitor = TilesVisitor()
 
-	ImageParser().processImage("kami2.png", tilesVisitor)
-	val maxClicks = 3
+	ImageParser().processImage("puzzles/kami1.png", tilesVisitor)
+	val maxClicks = 4
 
 	val board = Cmd.reducer.reduce(tilesVisitor.toBoard())
 	board.tiles().forEach { println(it) }
 
-	solve(board, maxClicks, deep = 0)
+	val elapsed = measureTimeMillis {
+		solve(board, maxClicks, deep = 0)
+	}
+
+	println("Done in ${elapsed}ms")
 }
 
 
@@ -40,7 +45,7 @@ fun solve(board: Board, maxClicks: Int, deep: Int): Boolean {
 }
 
 fun printSolvedSolution(board: Board, totalSteps: Int) {
-	println("Solved in $totalSteps steps")
+	println("Solved in ${totalSteps + 1} steps:")
 
 	val history = mutableListOf<Click>()
 

@@ -12,8 +12,9 @@ class Board(
 	}
 
 	fun countColors(): Int {
-		return (allTiles
+		return allTiles
 			.map { it.color }
-			.max() ?: 0) + 1
+			.distinct()
+			.count()
 	}
 }
