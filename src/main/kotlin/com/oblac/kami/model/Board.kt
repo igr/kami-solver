@@ -11,6 +11,9 @@ class Board(
 		return allTiles.stream()
 	}
 
+	/**
+	 * Counts total number of distinctive colors.
+	 */
 	fun countColors(): Int {
 		return allTiles
 			.map { it.color }
