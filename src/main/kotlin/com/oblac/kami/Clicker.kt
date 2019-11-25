@@ -1,4 +1,4 @@
-package com.oblac.kami.cmd
+package com.oblac.kami
 
 import com.oblac.kami.model.Board
 import com.oblac.kami.model.Click
@@ -6,15 +6,15 @@ import com.oblac.kami.model.PreviousBoard
 import com.oblac.kami.model.Tile
 import kotlin.streams.toList
 
-class Cloner {
+class Clicker(private val board: Board) {
 
-	fun clone(board: Board, click: Click): Board {
+	fun apply(click: Click): Board {
 		val newTileOf = mutableMapOf<Tile, Tile>()
 
 		val newTiles = board.tiles()
 			.map {
 				val newTile = if (it == click.tile)
-					cloneTile(it, click.nextColor) else cloneTile(it)
+					it.clone(click.nextColor) else it.clone()
 				newTileOf[it] = newTile
 				newTile
 			}
@@ -27,10 +27,6 @@ class Cloner {
 		}
 
 		return Board(newTiles.toSet(), parentBoard = PreviousBoard(board, click))
-	}
-
-	private fun cloneTile(t: Tile, c: Int = t.color): Tile {
-		return Tile(t.x, t.y, c)
 	}
 
 }

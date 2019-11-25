@@ -53,7 +53,6 @@ class ImageParser {
 		return usedColors.size - 1
 	}
 
-
 	private fun isMatchingColor(intColor1: Int, intColor2: Int, percent: Int = 80): Boolean {
 		val threadSold = 255 - (255 / 100f * percent)
 		val color1 = Color(intColor1)

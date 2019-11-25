@@ -1,13 +1,12 @@
-package com.oblac.kami.cmd
+package com.oblac.kami
 
-import com.oblac.kami.model.Board
 import com.oblac.kami.model.Tile
 import kotlin.streams.toList
 
-class Reducer {
+class TilesReducer {
 
-	fun reduce(board: Board): Board {
-		val tilesToReduce = board.tiles().toList().toMutableSet()
+	fun mergeAdjacentTilesOfSameColor(tilesList: Set<Tile>): Set<Tile> {
+		val tilesToReduce = tilesList.toMutableSet()
 		val remainingTiles = mutableSetOf<Tile>()
 
 		while (tilesToReduce.isNotEmpty()) {
@@ -29,7 +28,7 @@ class Reducer {
 			}
 		}
 
-		return Board(remainingTiles, board.parentBoard)
+		return remainingTiles
 	}
 
 }

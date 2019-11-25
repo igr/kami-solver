@@ -27,7 +27,7 @@ data class Tile(
 	}
 
 	/**
-	 * Detaches this tile from all connections.
+	 * Detaches this tile from all it's connections.
 	 */
 	fun detach() {
 		connections.forEach {
@@ -44,6 +44,13 @@ data class Tile(
 			.filter { it != this }
 			.forEach { this.connectTo(it) }
 		otherTile.detach()
+	}
+
+	/**
+	 * Clones a tile to new one with optionally new color.
+	 */
+	fun clone(c: Int = this.color): Tile {
+		return Tile(this.x, this.y, c)
 	}
 
 	override fun toString(): String {

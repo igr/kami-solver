@@ -1,12 +1,14 @@
 package com.oblac.kami
 
-import com.oblac.kami.cmd.AppCtx
 import kotlin.system.measureTimeMillis
 
 fun main() {
-	
+	val board = BoardLoader().loadBoardFromScreenshot(puzzleScreenshotsIndex = 1)
+
+	board.tiles().forEach { println(it) }
+
 	val elapsed = measureTimeMillis {
-		AppCtx.solver().solvePuzzle(1, 4)
+		Solver().solvePuzzle(board, 4)
 	}
 
 	println("Done in ${elapsed}ms")
