@@ -18,18 +18,10 @@ class Board(
 		return allTiles.stream()
 	}
 
-	/**
-	 * Counts total number of distinctive colors.
-	 */
-	fun countColors(): Int {
-		return colors().count()
-	}
-
-	/**
-	 * Returns list of colors used by all tiles.
-	 */
-	fun colors(): List<Int> {
-		return allTiles
+	// Instead of having a function, I go here with lazy value
+	// as Board is immutable. This also gives some performance
+	val colors by lazy {
+		allTiles
 			.map { it.color }
 			.distinct()
 	}

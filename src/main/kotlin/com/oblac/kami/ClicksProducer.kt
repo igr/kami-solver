@@ -7,6 +7,7 @@ import java.util.stream.Stream
 /**
  * Opposite to Clicker, this class is not part of the board.
  * it just uses the board to generate list of clicks.
+ * It belongs to Solver.
  */
 class ClicksProducer {
 
@@ -14,11 +15,11 @@ class ClicksProducer {
 	 * Creates all possible clicks for the board.
 	 */
 	fun createClicks(board: Board): Stream<Click> {
-		val colors = board.colors()
+		val colors = board.colors
 
 		return board.tiles()
 
-			// sort by number of connections, from max to min
+			// sort tiles by number of connections, from max to min
 			//.sorted { o1, o2 -> o2.connectionsCount - o1.connectionsCount }
 
 			.map {

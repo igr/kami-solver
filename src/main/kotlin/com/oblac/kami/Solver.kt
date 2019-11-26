@@ -13,7 +13,7 @@ class Solver {
 	var solved = false
 
 	private fun solve(board: Board, maxClicks: Int, deep: Int): Boolean {
-		val colorCount = board.countColors()
+		val colorCount = board.colors.size
 
 		if (colorCount == 1) {
 			printSolvedSolution(board, deep)
@@ -21,6 +21,14 @@ class Solver {
 		}
 
 		if (deep >= maxClicks) {
+			return false
+		}
+
+		// *** OPTIMISATION ***
+		val remainingClicks = maxClicks - deep
+		if (remainingClicks + 1 < colorCount) {
+			// if the number of colors on the board is greater then number of clicks (+1)
+			// then there is no point on going any further
 			return false
 		}
 
@@ -40,7 +48,7 @@ class Solver {
 
 				if (solve(newBoard, maxClicks, deep + 1)) {
 					solved = true
-					//				return true
+					// return true
 				}
 			}
 

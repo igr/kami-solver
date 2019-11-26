@@ -53,7 +53,9 @@ class ImageParser {
 		return usedColors.size - 1
 	}
 
-	private fun isMatchingColor(intColor1: Int, intColor2: Int, percent: Int = 80): Boolean {
+	// Not all tiles of the same color are actually colored the same:
+	// the game has some 'brightness' overlay so top tiles are more lighter
+	private fun isMatchingColor(intColor1: Int, intColor2: Int, percent: Int = 75): Boolean {
 		val threadSold = 255 - (255 / 100f * percent)
 		val color1 = Color(intColor1)
 		val color2 = Color(intColor2)
