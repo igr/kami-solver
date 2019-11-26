@@ -20,7 +20,7 @@ class Solver {
 			return false
 		}
 
-		val clicks = ClicksProducer(board).createClicks()
+		val clicks = ClicksProducer().createClicks(board)
 
 		for (click in clicks) {
 			val newBoard = board.click(click)

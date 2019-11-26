@@ -4,9 +4,16 @@ import com.oblac.kami.model.Board
 import com.oblac.kami.model.Click
 import kotlin.streams.toList
 
-class ClicksProducer(private val board: Board) {
+/**
+ * Opposite to Clicker, this class is not part of the board.
+ * it just uses the board to generate list of clicks.
+ */
+class ClicksProducer() {
 
-	fun createClicks(): List<Click> {
+	/**
+	 * Creates all possible clicks for the board.
+	 */
+	fun createClicks(board: Board): List<Click> {
 		val colors = board.colors()
 
 		return board.tiles()

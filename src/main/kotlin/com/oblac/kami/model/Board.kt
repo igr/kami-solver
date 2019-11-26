@@ -57,6 +57,10 @@ class Board(
 		return clicker.apply(click)
 	}
 
+	/**
+	 * Caching the `clicker` instance.
+	 * @see Clicker
+	 */
 	private val clicker by lazy { Clicker(this) }
 
 }
