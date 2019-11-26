@@ -27,6 +27,23 @@ data class Tile(
 	}
 
 	/**
+	 * Returns connections count.
+	 */
+	val connectionsCount: Int
+		get() {
+			return connections.size
+		}
+
+	/**
+	 * Returns true if given color matches one of the connections.
+	 */
+	fun matchesAdjacentColors(color: Int): Boolean {
+		return connections.find {
+			it.color == color
+		} != null
+	}
+
+	/**
 	 * Detaches this tile from all it's connections.
 	 */
 	fun detach() {

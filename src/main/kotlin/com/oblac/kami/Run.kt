@@ -3,7 +3,7 @@ package com.oblac.kami
 import kotlin.system.measureTimeMillis
 
 fun main() {
-	val board = BoardLoader().loadBoardFromScreenshot(puzzleScreenshotsIndex = 1)
+	val board = BoardLoader().loadBoardFromScreenshot(puzzleScreenshotsIndex = 2)
 
 	board.tiles().forEach { println(it) }
 

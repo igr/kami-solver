@@ -10,6 +10,8 @@ class Solver {
 		solve(board, numberOfSteps, deep = 0)
 	}
 
+	var solved = false
+
 	private fun solve(board: Board, maxClicks: Int, deep: Int): Boolean {
 		val colorCount = board.countColors()
 
@@ -22,22 +24,27 @@ class Solver {
 			return false
 		}
 
-		val clicks = ClicksProducer().createClicks(board)
+		ClicksProducer()
+			.createClicks(board)
+			// *** OPTIMISATION ***
+			.parallel()
+			.forEach { click ->
+				if (solved) return@forEach
 
-		for (click in clicks) {
+				clicksCount++
+				if (clicksCount % 100_000 == 0) {
+					println("\t$clicksCount")
+				}
 
-			clicksCount++
-			if (clicksCount % 100_000 == 0) {
-				println("\t$clicksCount")
+				val newBoard = board.click(click)
+
+				if (solve(newBoard, maxClicks, deep + 1)) {
+					solved = true
+					//				return true
+				}
 			}
 
-			val newBoard = board.click(click)
-			if (solve(newBoard, maxClicks, deep + 1)) {
-				return true
-			}
-		}
-
-		return false
+		return solved
 	}
 
 	private fun printSolvedSolution(board: Board, totalSteps: Int) {
