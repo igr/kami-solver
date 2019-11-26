@@ -8,8 +8,8 @@ import kotlin.math.abs
 
 class ImageParser {
 
-	fun processImage(imageName: String, visitor: TilesVisitor) {
-		val image: BufferedImage = ImageIO.read(File(imageName))
+	fun processImage(imageFile: File, visitor: TilesVisitor) {
+		val image: BufferedImage = ImageIO.read(imageFile)
 		val g = image.graphics
 
 		val w = image.width

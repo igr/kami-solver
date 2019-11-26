@@ -8,7 +8,7 @@ fun main() {
 	board.tiles().forEach { println(it) }
 
 	val elapsed = measureTimeMillis {
-		Solver().solvePuzzle(board, 4)
+		Solver().solvePuzzle(board, numberOfSteps = 4)
 	}
 
 	println("Done in ${elapsed}ms")
