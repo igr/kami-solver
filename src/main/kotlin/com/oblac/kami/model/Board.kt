@@ -12,6 +12,11 @@ class Board(
 	private val allTiles: Set<Tile> = TilesReducer().mergeAdjacentTilesOfSameColor(tiles)
 
 	/**
+	 * Indicates the depth of this board in the hierarchy.
+	 */
+	val depth: Int = if (parentBoard != null) parentBoard.board.depth + 1 else 0
+
+	/**
 	 * Returns stream of tiles this board consist of.
 	 */
 	fun tiles(): Stream<Tile> {
@@ -27,9 +32,9 @@ class Board(
 	}
 
 	/**
-	 * Returns history of all previous boards, from the first to this one.
+	 * Returns history of all previous boards, from the first one to the current one.
 	 */
-	fun history(): MutableList<Click> {
+	fun history(): List<Click> {
 		val history = mutableListOf<Click>()
 
 		var parent = parentBoard

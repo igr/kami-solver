@@ -10,6 +10,10 @@ class TilesVisitor {
 
 	private val allTiles = mutableListOf<Tile>()
 
+	fun visitEmptyTile() {
+		tileIndexInRow++
+	}
+
 	fun visitTile(color: Int): Tile {
 		val t = Tile(
 			x = tileIndexInRow, y = rowCount,

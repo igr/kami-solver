@@ -4,15 +4,20 @@ import kotlin.system.measureTimeMillis
 
 data class Puzzle(val index: Int, val numberOfSteps: Int)
 
-val puzzles = listOf(
-	Puzzle(0, 2),
-	Puzzle(1, 4),
-	Puzzle(2, 4),
-	Puzzle(3, 7)
+val puzzles = mapOf(
+	"game-0" to Puzzle(0, 2),       // 15 ms (10 clicks)
+	"game-1" to Puzzle(1, 4),       // 120 ms (4748 clicks)
+	"game-2" to Puzzle(2, 4),       // 688 ms (6985 clicks)
+	"game-3" to Puzzle(3, 3),       // 70 ms (375 clicks)
+	"game-4" to Puzzle(4, 5),       // 487ms (11530 clicks)
+
+	"hard-1" to Puzzle(99901, 7),
+	"hard-2" to Puzzle(99902, 7)
 )
 
 fun main() {
-	val puzzle = puzzles[3]
+	val puzzle = puzzles["game-1"] ?: error("Invalid puzzle name")
+//	val puzzle = puzzles["hard-1"] ?: error("Invalid puzzle name")
 
 	val board = BoardLoader().loadBoardFromScreenshot(puzzleScreenshotsIndex = puzzle.index)
 
