@@ -1,6 +1,5 @@
 package com.oblac.kami.model
 
-import com.oblac.kami.Clicker
 import com.oblac.kami.TilesReducer
 import java.util.stream.Stream
 

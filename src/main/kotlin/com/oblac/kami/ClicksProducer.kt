@@ -29,7 +29,7 @@ class ClicksProducer {
 						// connections colors
 						continue
 					}
-					clicks.add(Click(it, newColor))
+					clicks.add(Click(board, it, newColor))
 				}
 				clicks
 			}

@@ -43,13 +43,11 @@ class Solver {
 				continue
 			}
 
-			val clicker = Clicker(board)
-
 			ClicksProducer()
 				.createClicks(board)
 				.parallel()
 				.peek { printDebug(++clicksCounter) }
-				.map { clicker.apply(it) }
+				.map { it.click() }
 				.forEach { addBoardToQueue(it) }
 		}
 	}
@@ -65,9 +63,10 @@ class Solver {
 	}
 
 	private fun addBoardToQueue(board: Board) {
-		synchronized(queue) {
-			val boardColors = board.colors.size
-			queue[boardColors].add(0, board)
+		val boardColors = board.colors.size
+		val boardList = queue[boardColors]
+		synchronized(boardList) {
+			boardList.add(0, board)
 
 			// *** OPTIMISATION ***
 			// new boards are always added first,
