@@ -1,7 +1,10 @@
-package com.oblac.kami
+package com.oblac.kami.load
 
 import com.oblac.kami.model.Tile
 
+/**
+ * Quick and UGLY visitor.
+ */
 class TilesVisitor {
 
 	private var tilesPerRow = 0
@@ -9,6 +12,11 @@ class TilesVisitor {
 	private var tileIndexInRow = 0
 
 	private val allTiles = mutableListOf<Tile>()
+
+	val x
+		get() = tileIndexInRow
+	val y
+		get() = rowCount
 
 	fun visitTile(color: Int): Tile {
 		val t = Tile(

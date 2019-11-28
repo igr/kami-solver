@@ -1,4 +1,4 @@
-package com.oblac.kami
+package com.oblac.kami.load
 
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -7,10 +7,10 @@ import javax.imageio.ImageIO
 import kotlin.math.abs
 
 /**
- * Dirty and ugly image parser, just good enough.
+ * Dirty and UGLY image parser, just good enough.
  * Some screenshots have to be manually fixed before running.
  */
-class ImageParser {
+class ImageParser(private val limits: Pair<Int, Int>) {
 
 	private val usedColors = mutableListOf<Int>()
 
@@ -34,17 +34,20 @@ class ImageParser {
 			while (x < w) {
 				val pixel = image.getRGB(x, y)
 				val colorIndex = colorOf(pixel)
-				val tile = visitor.visitTile(colorIndex)
 
-				image.setRGB(x, y, pixel xor 0xFFFFFF)
+				if (visitor.x <= limits.first && visitor.y <= limits.second) {
+					val tile = visitor.visitTile(colorIndex)
 
-				val str = "(${tile.x},${tile.y}):${tile.color}"
-				val fm = g.fontMetrics
-				val rect = fm.getStringBounds(str, g)
-				g.color = Color.BLACK
-				g.fillRect(x, y - fm.ascent, rect.width.toInt(), rect.height.toInt())
-				g.color = Color.WHITE
-				g.drawString(str, x, y)
+					image.setRGB(x, y, pixel xor 0xFFFFFF)
+
+					val str = "(${tile.x},${tile.y}):${tile.color}"
+					val fm = g.fontMetrics
+					val rect = fm.getStringBounds(str, g)
+					g.color = Color.BLACK
+					g.fillRect(x, y - fm.ascent, rect.width.toInt(), rect.height.toInt())
+					g.color = Color.WHITE
+					g.drawString(str, x, y)
+				}
 
 				x += deltaX
 			}
