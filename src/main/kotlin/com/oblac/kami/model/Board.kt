@@ -5,7 +5,7 @@ import java.util.stream.Stream
 
 class Board(
 	tiles: Set<Tile>,
-	val parentBoard: PreviousBoard? = null
+	val parent: Click? = null
 ) {
 
 	private val allTiles: Set<Tile> = TilesReducer().mergeAdjacentTilesOfSameColor(tiles)
@@ -13,7 +13,7 @@ class Board(
 	/**
 	 * Indicates the depth of this board in the hierarchy of the game.
 	 */
-	val depth: Int = if (parentBoard != null) parentBoard.board.depth + 1 else 0
+	val depth: Int = if (parent != null) parent.board.depth + 1 else 0
 
 	/**
 	 * Returns stream of tiles this board consist of.
@@ -36,10 +36,10 @@ class Board(
 	fun history(): List<Click> {
 		val history = mutableListOf<Click>()
 
-		var parent = parentBoard
+		var parent = parent
 		while (parent != null) {
-			history.add(parent.changeClick)
-			parent = parent.board.parentBoard
+			history.add(parent)
+			parent = parent.board.parent
 		}
 
 		history.reverse()
@@ -54,7 +54,10 @@ class Board(
 		allTiles.filter { it.color == color }.forEach { it.detach() }
 		val newSet = allTiles.filter { it.color != color }.toSet()
 
-		return Board(newSet, parentBoard)
+		return Board(newSet, parent)
 	}
 
+	override fun toString(): String {
+		return "Board.$depth (${allTiles.size}/${colors.size})"
+	}
 }

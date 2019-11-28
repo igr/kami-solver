@@ -25,7 +25,7 @@ data class Click(val board: Board, val tile: Tile, val nextColor: Int) {
 			}
 		}
 
-		return Board(newTiles, parentBoard = PreviousBoard(board, this))
+		return Board(newTiles, parent = this)
 	}
 
 }
