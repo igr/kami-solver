@@ -10,6 +10,8 @@ class Solver {
 	fun solvePuzzle(board: Board, numberOfSteps: Int) {
 		val maxColors = board.colors.size
 
+		println("Total $maxColors colors")
+
 		for (color in 0..maxColors) queue.add(LinkedList())
 
 		queue[maxColors].add(board)
@@ -64,7 +66,10 @@ class Solver {
 	private fun addBoardToQueue(board: Board) {
 		synchronized(queue) {
 			val boardColors = board.colors.size
-			queue[boardColors].add(0, board)    // new boards are always added first, so deeper boards are going to be processed first
+			queue[boardColors].add(0, board)
+
+			// new boards are always added first,
+			// so deeper boards are going to be processed first
 		}
 	}
 

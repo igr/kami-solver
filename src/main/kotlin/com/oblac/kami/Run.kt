@@ -16,7 +16,7 @@ val puzzles = mapOf(
 )
 
 fun main() {
-	val puzzle = puzzles["game-4"] ?: error("Invalid puzzle name")
+	val puzzle = puzzles["game-1"] ?: error("Invalid puzzle name")
 //	val puzzle = puzzles["hard-1"] ?: error("Invalid puzzle name")
 
 	val board = BoardLoader().loadBoardFromScreenshot(puzzleScreenshotsIndex = puzzle.index)

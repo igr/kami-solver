@@ -12,8 +12,8 @@ class ImageParser {
 
 	fun processImage(imageFile: File, visitor: TilesVisitor) {
 		val image: BufferedImage = ImageIO.read(imageFile)
-		val g = image.graphics
 
+		val g = image.graphics
 		val w = image.width
 		val h = image.height
 
@@ -29,7 +29,8 @@ class ImageParser {
 		while (y < maxY) {
 			while (x < w) {
 				val pixel = image.getRGB(x, y)
-				val tile = visitor.visitTile(colorOf(pixel))
+				val colorIndex = colorOf(pixel)
+				val tile = visitor.visitTile(colorIndex)
 
 				image.setRGB(x, y, pixel xor 0xFFFFFF)
 
