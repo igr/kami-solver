@@ -12,6 +12,10 @@ class ClicksProducer {
 	fun createClicks(board: Board): Stream<Click> {
 		return board
 			.tiles()
+
+//			// sort tiles by number of connections, from max to min
+//			.sorted { o1, o2 -> o2.connectionsCount - o1.connectionsCount }
+
 			.map {
 				val clicks = mutableListOf<Click>()
 				for (newColor in board.colors) {
