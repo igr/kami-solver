@@ -6,6 +6,10 @@ import java.io.File
 import javax.imageio.ImageIO
 import kotlin.math.abs
 
+/**
+ * Dirty and ugly image parser, just good enough.
+ * Some screenshots have to be manually fixed before running.
+ */
 class ImageParser {
 
 	private val usedColors = mutableListOf<Int>()

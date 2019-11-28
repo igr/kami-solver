@@ -4,11 +4,6 @@ import com.oblac.kami.model.Board
 import com.oblac.kami.model.Click
 import java.util.stream.Stream
 
-/**
- * Opposite to Clicker, this class is not part of the board.
- * it just uses the board to generate list of clicks.
- * It belongs to Solver.
- */
 class ClicksProducer {
 
 	/**

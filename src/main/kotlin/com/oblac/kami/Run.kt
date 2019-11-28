@@ -1,8 +1,12 @@
 package com.oblac.kami
 
+import com.oblac.kami.model.Board
 import kotlin.system.measureTimeMillis
 
-data class Puzzle(val index: Int, val numberOfSteps: Int)
+class Puzzle(
+	val index: Int,
+	val numberOfSteps: Int,
+	val boardFixer : (Board) -> Board = { it })
 
 val puzzles = mapOf(
 	"game-0" to Puzzle(0, 2),       // 15 ms (10 clicks)
@@ -11,15 +15,19 @@ val puzzles = mapOf(
 	"game-3" to Puzzle(3, 3),       // 42 ms (281 clicks)
 	"game-4" to Puzzle(4, 5),       // 487ms (10922 clicks)
 
-	"hard-1" to Puzzle(99901, 7),
-	"hard-2" to Puzzle(99902, 7)
+	"hard-1" to Puzzle(99901, 7) { it.removeTilesOfColor(5) },   // 761809 clicks
+	"hard-2" to Puzzle(99902, 10)
 )
 
 fun main() {
-	val puzzle = puzzles["game-1"] ?: error("Invalid puzzle name")
-//	val puzzle = puzzles["hard-1"] ?: error("Invalid puzzle name")
+//	val puzzle = puzzles["game-1"] ?: error("Invalid puzzle name")
+	val puzzle = puzzles["hard-1"] ?: error("Invalid puzzle name")
 
-	val board = BoardLoader().loadBoardFromScreenshot(puzzleScreenshotsIndex = puzzle.index)
+	val loadedBoard = loadBoardFromScreenshot(puzzleScreenshotsIndex = puzzle.index)
+
+	val board = puzzle.boardFixer.invoke(loadedBoard)
+
+	println("Board: total ${board.colors.size} colors")
 
 	board.tiles().forEach { println(it) }
 

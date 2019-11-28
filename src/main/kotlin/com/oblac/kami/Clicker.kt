@@ -6,13 +6,6 @@ import com.oblac.kami.model.PreviousBoard
 import com.oblac.kami.model.Tile
 import java.util.stream.Collectors
 
-/**
- * A way how to extract method and not pollute the Board class.
- * By specifying the target as a private constructor, we specify the
- * dependency and the purpose of this class.
- *
- * This is an extension of the Board. It can't exist without it.
- */
 class Clicker(private val board: Board) {
 
 	/**

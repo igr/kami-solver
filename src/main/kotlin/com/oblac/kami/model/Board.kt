@@ -12,7 +12,7 @@ class Board(
 	private val allTiles: Set<Tile> = TilesReducer().mergeAdjacentTilesOfSameColor(tiles)
 
 	/**
-	 * Indicates the depth of this board in the hierarchy.
+	 * Indicates the depth of this board in the hierarchy of the game.
 	 */
 	val depth: Int = if (parentBoard != null) parentBoard.board.depth + 1 else 0
 
@@ -24,7 +24,7 @@ class Board(
 	}
 
 	// Instead of having a function, I go here with lazy value
-	// as Board is immutable. This also gives some performance
+	// as Board is immutable - gives better performances.
 	val colors by lazy {
 		allTiles
 			.map { it.color }
@@ -46,18 +46,16 @@ class Board(
 		history.reverse()
 		return history
 	}
-	
-	/**
-	 * Applies a click and generates new board.
-	 */
-	fun click(click: Click): Board {
-		return clicker.apply(click)
-	}
 
 	/**
-	 * Caching the `clicker` instance.
-	 * @see Clicker
+	 * Removes all the tiles of given color.
 	 */
-	private val clicker by lazy { Clicker(this) }
+	fun removeTilesOfColor(color: Int): Board {
+
+		allTiles.filter { it.color == color }.forEach { it.detach() }
+		val newSet = allTiles.filter { it.color != color }.toSet()
+
+		return Board(newSet, parentBoard)
+	}
 
 }

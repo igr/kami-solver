@@ -17,10 +17,8 @@ class TilesReducer {
 				.filter { currentTile.color == it.color }
 				.peek { hadConnectionsWithSameColor = true }
 				.peek { tilesToReduce.remove(it) }
-				.toList()   // create new list to avoid concurrent modifications
-				.forEach {
-					currentTile.join(it)
-				}
+				.toList()   // create new list to avoid concurrent modifications!
+				.forEach { currentTile.join(it) }
 
 			if (!hadConnectionsWithSameColor) {
 				tilesToReduce.remove(currentTile)
