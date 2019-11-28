@@ -20,12 +20,12 @@ val puzzles = mapOf(
 	"game-5" to Puzzle(5, 9) { it.removeTilesOfColor(4) },      // ?
 
 	"hard-1" to Puzzle(99901, 7) { it.removeTilesOfColor(5) },  // 8812ms (786046 clicks) OR much more sometimes
-	"hard-2" to Puzzle(99902, 6)
+	"hard-2" to Puzzle(99902, 10, Pair(4, 14))
 )
 
 fun main() {
-//	val puzzle = puzzles["game-2"] ?: error("Invalid puzzle name")
-	val puzzle = puzzles["hard-2"] ?: error("Invalid puzzle name")
+	val puzzle = puzzles["game-1"] ?: error("Invalid puzzle name")
+//	val puzzle = puzzles["hard-1"] ?: error("Invalid puzzle name")
 
 	val loadedBoard = loadBoardFromScreenshot(puzzle)
 

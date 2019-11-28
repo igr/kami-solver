@@ -13,7 +13,7 @@ class Board(
 	/**
 	 * Indicates the depth of this board in the hierarchy of the game.
 	 */
-	val depth: Int = if (parent != null) parent.board.depth + 1 else 0
+	val depth: Int = if (parent != null) parent.board.depth + parent.tile.weight else 0
 
 	/**
 	 * Returns stream of tiles this board consist of.

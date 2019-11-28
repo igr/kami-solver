@@ -18,10 +18,11 @@ class TilesVisitor {
 	val y
 		get() = rowCount
 
-	fun visitTile(color: Int): Tile {
+	fun visitTile(color: Int, weight: Int): Tile {
 		val t = Tile(
 			x = tileIndexInRow, y = rowCount,
-			color = color)
+			color = color,
+			weight = weight)
 
 		if (rowCount == 0) {
 			tilesPerRow++

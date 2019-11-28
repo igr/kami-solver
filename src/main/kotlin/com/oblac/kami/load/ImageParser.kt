@@ -36,11 +36,13 @@ class ImageParser(private val limits: Pair<Int, Int>) {
 				val colorIndex = colorOf(pixel)
 
 				if (visitor.x <= limits.first && visitor.y <= limits.second) {
-					val tile = visitor.visitTile(colorIndex)
+					var weight = calculateTileWeight(visitor)
+
+					val tile = visitor.visitTile(colorIndex, weight)
 
 					image.setRGB(x, y, pixel xor 0xFFFFFF)
 
-					val str = "(${tile.x},${tile.y}):${tile.color}"
+					val str = "(${tile.x},${tile.y})${tile.weight}/${tile.color}"
 					val fm = g.fontMetrics
 					val rect = fm.getStringBounds(str, g)
 					g.color = Color.BLACK
@@ -57,6 +59,34 @@ class ImageParser(private val limits: Pair<Int, Int>) {
 		}
 
 		ImageIO.write(image, "PNG", File("out.png"))
+	}
+
+	/**
+	 * Calculates the weight of the tile. The weight is used
+	 * on symmetrical boards.
+	 */
+	private fun calculateTileWeight(visitor: TilesVisitor): Int {
+		var weight = 1
+		if (limits.first != Int.MAX_VALUE) {
+			// we have X limit
+			if (visitor.x < limits.first) {
+				weight *= 2
+			} else if (visitor.y % 2 == 0) {
+				// not ALL edges are symmetrical!
+				weight *= 2
+			}
+		}
+		if (limits.second != Int.MAX_VALUE) {
+			// we have Y limit
+			if (visitor.y < limits.second) {
+				weight *= 2
+			}
+		}
+		if (visitor.x == limits.first && visitor.y == limits.second) {
+			// special case! the corner!
+			weight = 1
+		}
+		return weight
 	}
 
 	private fun colorOf(rgb: Int): Int {

@@ -34,6 +34,9 @@ class ClicksProducer {
 				clicks
 			}
 			.flatMap { it.stream() }
+//			.sorted{ c1, c2 ->
+//				c1.nextColor - c2.nextColor
+//			}
 	}
 
 }
