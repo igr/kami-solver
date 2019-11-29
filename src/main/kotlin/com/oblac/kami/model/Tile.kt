@@ -70,6 +70,34 @@ class Tile(
 		otherTile.detach()
 	}
 
+
+	fun isConnectedTo(tile: Tile): Boolean {
+		if (this == tile) {
+			return true
+		}
+
+		val todo = mutableSetOf<Tile>()
+		val processed = mutableSetOf(this)
+
+		todo.addAll(connections)
+
+		while (true) {
+			val next = todo.firstOrNull() ?: return false
+			todo.remove(next)
+
+			if (next == tile) {
+				return true
+			}
+			if (processed.contains(next)) {
+				continue
+			}
+			todo.addAll(next.connections)
+			processed.add(next)
+		}
+	}
+
+
+
 	/**
 	 * Clones a tile to new one with optionally new color.
 	 */
