@@ -46,9 +46,9 @@ class ImageParser(private val limits: Pair<Int, Int>) {
 					val fm = g.fontMetrics
 					val rect = fm.getStringBounds(str, g)
 					g.color = Color.BLACK
-					g.fillRect(x, y - fm.ascent, rect.width.toInt(), rect.height.toInt())
+					g.fillRect(x - 10, y - fm.ascent, rect.width.toInt(), rect.height.toInt())
 					g.color = Color.WHITE
-					g.drawString(str, x, y)
+					g.drawString(str, x - 10, y)
 				}
 
 				x += deltaX

@@ -3,7 +3,10 @@ package com.oblac.kami
 import com.oblac.kami.model.Board
 import java.util.*
 
-class Solver {
+class Solver(board: Board, private val maxClicks: Int) {
+
+	var clicksCounter = 0
+	var currentBoard : Board = board
 
 	// *** OPTIMISATION ***
 	// Instead of having one queue, we have many: one for each number of colors.
@@ -11,32 +14,26 @@ class Solver {
 	// as they might go towards the solution
 	private var queue = arrayListOf<LinkedList<Board>>()
 
-	fun solvePuzzle(board: Board, numberOfSteps: Int) {
+	init {
 		val maxColors = board.colors.size
-
 		for (color in 0..maxColors) queue.add(LinkedList())
-
 		queue[maxColors].add(board)
-
-		solve(numberOfSteps)
 	}
 
-	private fun solve(maxClicks: Int) {
-		var clicksCounter = 0
+	fun solvePuzzle(): Int {
 		while (true) {
-			val board = nextBoard()
+			currentBoard = nextBoard() ?: return -1
 
-			if (board.colors.size == 1) {
-				printSolvedSolution(board, clicksCounter)
-				return
+			if (currentBoard.colors.size == 1) {
+				return currentBoard.colors[0]
 			}
 
-			val remainingClicks = maxClicks - board.depth
+			val remainingClicks = maxClicks - currentBoard.depth
 
 			if (remainingClicks == 0) continue
 
 			// *** OPTIMISATION ***
-			if (remainingClicks + 1 < board.colors.size) {
+			if (remainingClicks + 1 < currentBoard.colors.size) {
 				// if the number of colors on the board is greater then number of clicks (+1)
 				// then there is no point on going any further. For example, if there are 3 nodes
 				// left with all different colors, you can't solve it with 1 click, only with 2.
@@ -44,7 +41,7 @@ class Solver {
 			}
 
 			ClicksProducer()
-				.createClicks(board)
+				.createClicks(currentBoard)
 				.parallel()
 //				.sorted { c1, c2 -> c2.nextColor - c1.nextColor }
 //				.sorted { c1, c2 -> c2.tile.connectionsCount - c1.tile.connectionsCount }
@@ -57,11 +54,11 @@ class Solver {
 	/**
 	 * Returns the very next board to process.
 	 */
-	private fun nextBoard(): Board {
+	private fun nextBoard(): Board? {
 		for (boardList in queue) {
 			if (boardList.isNotEmpty()) return boardList.removeFirst() else continue
 		}
-		throw Exception("No boards left :(")
+		return null
 	}
 
 	private fun addBoardToQueue(board: Board) {
@@ -83,12 +80,6 @@ class Solver {
 			println("\t$clicksCounter")
 		}
 
-	}
-
-	private fun printSolvedSolution(board: Board, totalClicks: Int) {
-		println("Solved in ${board.depth} steps and total $totalClicks clicks:")
-
-		board.history().forEach { println(it) }
 	}
 
 }
