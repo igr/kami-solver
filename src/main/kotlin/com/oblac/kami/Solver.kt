@@ -44,7 +44,7 @@ class Solver(board: Board, private val maxClicks: Int) {
 				.createClicks(currentBoard)
 				.parallel()
 //				.sorted { c1, c2 -> c2.nextColor - c1.nextColor }
-//				.sorted { c1, c2 -> c2.tile.connectionsCount - c1.tile.connectionsCount }
+				.sorted { c1, c2 -> c2.tile.connectionsCount - c1.tile.connectionsCount }
 				.peek { printDebug(++clicksCounter) }
 				.map { it.click() }
 				.forEach { addBoardToQueue(it) }
